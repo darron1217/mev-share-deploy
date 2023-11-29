@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  redis:
+    image: redis/redis-stack:latest
+    restart: always
+    ports:
+      - '6379:6379'
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+  mevshare:
+    build: ./mev-share-node
+    volumes:
+      - ./builders.yaml:/app/builders.yaml
+    ports:
+      - '8080:8080'
+    environment:
+      SIMULATION_ENDPOINTS: http://builder:8545
+      ETH_ENDPOINT: http://builder:8545
+      REDIS_ENDPOINT: redis://redis:6379
+      POSTGRES_DSN: postgres://postgres:postgres@postgres:5432/postgres?sslmode=disable
+  builder:
+    build: ../builder
+    ports:
+      - ${EC_PORT_P2P:-30303}:30303/tcp # P2P TCP
+      - ${EC_PORT_P2P:-30303}:30303/udp # P2P UDP
+      - ${EC_PORT_HTTP:-8545}:8545 # JSON-RPC
+    restart: always
+    command: |
+      --goerli
+    volumes:
+      - ./data/geth:/root/.ethereum

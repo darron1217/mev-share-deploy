@@ -1,0 +1,6 @@
+[submodule "mev-share-node"]
+	path = mev-share-node
+	url = https://github.com/flashbots/mev-share-node.git
+[submodule "builder"]
+	path = builder
+	url = https://github.com/flashbots/builder.git
