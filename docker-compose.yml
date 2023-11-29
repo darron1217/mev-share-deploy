@@ -42,6 +42,9 @@ services:
       --http.vhosts="*"
       --http.api="eth,net,engine,rpc,web3"
       --authrpc.jwtsecret="/root/jwt/jwt.hex"
+      --authrpc.addr=0.0.0.0
+      --authrpc.port=8551
+      --authrpc.vhosts="*"
     volumes:
       - ./data/geth:/root/.ethereum
       - ./data/jwt:/root/jwt
