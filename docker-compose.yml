@@ -36,5 +36,33 @@ services:
     restart: always
     command: |
       --goerli
+      --http
+      --http.addr=0.0.0.0
+      --http.port=8545
+      --http.vhosts="*"
+      --http.api="db,eth,net,engine,rpc,web3"
+      --authrpc.jwtsecret="/root/jwt/jwt.hex"
     volumes:
       - ./data/geth:/root/.ethereum
+      - ./data/jwt:/root/jwt
+  beacon:
+    image: sigp/lighthouse:${LIGHTHOUSE_VERSION:-v4.5.0}
+    ports:
+      - ${CC_PORT_P2P:-9000}:9000/tcp # P2P TCP
+      - ${CC_PORT_P2P:-9000}:9000/udp # P2P UDP
+      - ${CC_PORT_HTTP:-5052}:5052 # HTTP API
+    command: |
+      lighthouse bn
+      --network=${ETH2_NETWORK:-goerli}
+      --checkpoint-sync-url=${CC_CHECKPOINT_SYNC_URL:-https://sync-goerli.beaconcha.in}
+      --execution-endpoint=${CC_EXECUTION_ENDPOINT:-http://builder:8551}
+      --execution-jwt=/opt/jwt/jwt.hex
+      --datadir=/opt/app/beacon/
+      --debug-level=info
+      --http
+      --http-address=0.0.0.0
+      --http-port=5052
+    volumes:
+      - ./data/lighthouse:/opt/app/beacon
+      - ./data/jwt:/opt/jwt
+    restart: unless-stopped
