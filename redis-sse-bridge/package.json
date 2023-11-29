@@ -1,0 +1,10 @@
+{
+  "name": "redis-sse-bridge",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "redis-subscribe-sse": "^1.0.0"
+  }
+}

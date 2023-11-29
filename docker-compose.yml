@@ -6,6 +6,15 @@ services:
     ports:
       - 6379:6379
 
+  redis_bridge:
+    build: ./redis-sse-bridge
+    restart: always
+    ports:
+      - 80:3000
+    environment:
+      REDIS_HOST: redis
+      REDIS_CHANNEL: hints
+
   postgres:
     image: postgres
     restart: always
