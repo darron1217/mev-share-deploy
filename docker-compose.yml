@@ -28,7 +28,7 @@ services:
       REDIS_ENDPOINT: redis://redis:6379
       POSTGRES_DSN: postgres://postgres:postgres@postgres:5432/postgres?sslmode=disable
   builder:
-    build: ../builder
+    build: ./builder
     ports:
       - ${EC_PORT_P2P:-30303}:30303/tcp # P2P TCP
       - ${EC_PORT_P2P:-30303}:30303/udp # P2P UDP
