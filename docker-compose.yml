@@ -40,11 +40,16 @@ services:
       --http.addr=0.0.0.0
       --http.port=8545
       --http.vhosts="*"
-      --http.api="eth,net,engine,rpc,web3"
+      --http.api="admin,debug,web3,eth,txpool,personal,miner,net,builder,engine"
       --authrpc.jwtsecret="/root/jwt/jwt.hex"
       --authrpc.addr=0.0.0.0
       --authrpc.port=8551
       --authrpc.vhosts="*"
+      --builder=true
+      --builder.secret_key=${BUILDER_TX_SIGNING_KEY}
+      --miner.extradata=${BUILDER_EXTRA_DATA}
+      --miner.etherbase=${BUILDER_ADDRESS}
+      --miner.algotype=greedy
     volumes:
       - ./data/geth:/root/.ethereum
       - ./data/jwt:/root/jwt
