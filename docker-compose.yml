@@ -49,7 +49,6 @@ services:
       --builder.secret_key=${BUILDER_TX_SIGNING_KEY}
       --miner.extradata=${BUILDER_EXTRA_DATA}
       --miner.etherbase=${BUILDER_ADDRESS}
-      --miner.algotype=greedy
     volumes:
       - ./data/geth:/root/.ethereum
       - ./data/jwt:/root/jwt
