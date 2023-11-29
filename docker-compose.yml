@@ -46,7 +46,7 @@ services:
       --authrpc.port=8551
       --authrpc.vhosts="*"
       --builder=true
-      --builder.secret_key=${BUILDER_TX_SIGNING_KEY}
+      --builder.remote_relay_endpoint=https://0xafa4c6985aa049fb79dd37010438cfebeb0f2bd42b115b89dd678dab0670c1de38da0c4e9138c9290a398ecd9a0b3110@boost-relay-goerli.flashbots.net
       --miner.extradata=${BUILDER_EXTRA_DATA}
       --miner.etherbase=${BUILDER_ADDRESS}
     volumes:
